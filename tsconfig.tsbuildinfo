@@ -1,0 +1,1 @@
+{"root":["./vite.config.ts","./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/cards/cards.tsx","./src/components/map/map.tsx","./src/components/stepper/stepper.tsx","./src/components/video/video.tsx","./src/components/header/header.tsx","./src/data/monuments.ts"],"version":"5.7.3"}

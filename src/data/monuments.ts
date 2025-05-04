@@ -1,10 +1,10 @@
-import ContentImageOne from '../assets/images/image-1.jpg';
-import ContentImageTwo from '../assets/images/image-2.jpg';
-import ContentImageThree from '../assets/images/image-3.jpg';
-import ContentImageFour from '../assets/images/image-4.jpg';
-import ContentImageFive from '../assets/images/image-5.jpg';
-import ContentImageSix from '../assets/images/image-6.jpg';
-import ContentImageSeven from '../assets/images/image-7.jpg';
+import ContentImageOne from '../assets/images/image-1.webp';
+import ContentImageTwo from '../assets/images/image-2.webp';
+import ContentImageThree from '../assets/images/image-3.webp';
+import ContentImageFour from '../assets/images/image-4.webp';
+import ContentImageFive from '../assets/images/image-5.webp';
+import ContentImageSix from '../assets/images/image-6.webp';
+import ContentImageSeven from '../assets/images/image-7.webp';
 
 export const monuments = [
     {
