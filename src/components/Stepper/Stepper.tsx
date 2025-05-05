@@ -14,7 +14,7 @@ export default function HorizontalLinearStepper() {
     return (
         <Box sx={{ width: '100%', maxWidth: '100%', px: { xs: 1, sm: 2 }, marginBottom: '20px' }}>
             <Stepper alternativeLabel>
-                {steps.map((label, index) => (
+                {steps.map((label) => (
                     <Step key={label} completed={true }>
                         <StepLabel>{label}</StepLabel>
                     </Step>

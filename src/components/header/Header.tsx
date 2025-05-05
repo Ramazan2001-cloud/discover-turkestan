@@ -33,7 +33,15 @@ export default function Header(props: Props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
+            <Typography
+                variant="h6" sx={{ my: 2 }}
+                onClick={() => {
+                    const element = document.getElementById('Басты бет');
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }}
+            >
                 Discover Turkestan
             </Typography>
             <Divider />
@@ -84,15 +92,65 @@ export default function Header(props: Props) {
                         <MenuIcon />
                     </IconButton>
 
+
                     {/* Ограничивающий контейнер внутри AppBar */}
-                    <Box sx={{ maxWidth: '1400px', width: '100%', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Box
+                        sx={{
+                            maxWidth: '1400px',
+                            width: '100%',
+                            margin: '0 auto',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            position: 'relative',
+                            flexGrow: 1,
+                        }}
+                    >
+                        {/* Логотип по центру на мобилке */}
+                        <Box
+                            sx={{
+                                display: { xs: 'flex', sm: 'none' },
+                                justifyContent: 'center',
+                                position: 'absolute',
+                                left: 0,
+                                right: 0,
+                                pointerEvents: 'none',
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                                onClick={() => {
+                                    const element = document.getElementById('Басты бет');
+                                    if (element) {
+                                        element.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                }}
+                            >
+                                Discover Turkestan
+                            </Typography>
+                        </Box>
+
+                        {/* Логотип слева на desktop */}
                         <Typography
                             variant="h6"
                             component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                            sx={{
+                                display: { xs: 'none', sm: 'block' },
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => {
+                                const element = document.getElementById('Басты бет');
+                                if (element) {
+                                    element.scrollIntoView({ behavior: 'smooth' });
+                                }
+                            }}
                         >
                             Discover Turkestan
                         </Typography>
+
+                        {/* Навигация справа */}
                         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                             {navItems.map((item) => (
                                 <Button

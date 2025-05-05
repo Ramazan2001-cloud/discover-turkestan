@@ -1,9 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Button, Box, Stack, useMediaQuery } from '@mui/material';
+import { Button, Box, Stack, useMediaQuery, IconButton } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
-import L, { Icon } from 'leaflet';
+import { useRef, useState } from 'react';
+import { Icon } from 'leaflet';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './Map.scss';
 
 const defaultIcon = new Icon({
@@ -41,55 +43,95 @@ function Map() {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    const handleScroll = (direction: 'left' | 'right') => {
+        if (scrollRef.current) {
+            const amount = 150;
+            scrollRef.current.scrollBy({
+                left: direction === 'left' ? -amount : amount,
+                behavior: 'smooth',
+            });
+        }
+    };
+
     const handleClick = (index: number) => {
         setActiveIndex(prev => (prev === index ? null : index));
     };
 
     return (
         <Box width="100%" height="100%">
-            {/* Кнопки сверху */}
-            <Box p={2} display="flex" justifyContent="center">
-                <Stack
-                    spacing={2}
-                    direction={isSmallScreen ? 'column' : 'row'}
-                    alignItems="center"
-                    justifyContent="center"
-                    flexWrap="wrap"
-                    width="100%"
-                    textAlign="center"
-                    gap="20px"
-                    sx={{marginBottom: "20px"}}
+            {/* Кнопки с прокруткой */}
+            <Box p={2} display="flex" alignItems="center" position="relative">
+                <IconButton
+                    onClick={() => handleScroll('left')}
+                    sx={{ position: 'absolute', left: 0, zIndex: 1, backgroundColor: 'white' }}
                 >
-                    {monuments.map((monument, index) => {
-                        const isActive = activeIndex === index;
-                        return (
-                            <Button
-                                key={index}
-                                variant={isActive ? 'contained' : 'outlined'}
-                                color={isActive ? 'primary' : 'inherit'}
-                                onClick={() => handleClick(index)}
-                                sx={{
-                                    color: isActive ? undefined : '#1976d2', // Синий цвет текста
-                                    borderColor: isActive ? undefined : '#1976d2', // Синий бордер
-                                    '&:hover': {
-                                        borderColor: '#1565c0', // Цвет при ховере
-                                        backgroundColor: isActive ? undefined : 'rgba(21, 101, 192, 0.04)',
-                                    },
-                                }}
-                            >
-                                {monument.name}
-                            </Button>
-                        );
-                    })}
-                </Stack>
+                    <ArrowBackIosNewIcon />
+                </IconButton>
+
+                <Box
+                    ref={scrollRef}
+                    overflow="auto"
+                    sx={{
+                        mx: 4,
+                        whiteSpace: 'nowrap',
+                        '&::-webkit-scrollbar': { display: 'none' },
+                        scrollBehavior: 'smooth',
+                        width: '100%',
+                    }}
+                >
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        alignItems="center"
+                        justifyContent="flex-start"
+                        sx={{ minWidth: 'max-content' }}
+                    >
+                        {monuments.map((monument, index) => {
+                            const isActive = activeIndex === index;
+                            return (
+                                <Button
+                                    key={index}
+                                    variant={isActive ? 'contained' : 'outlined'}
+                                    color={isActive ? 'primary' : 'inherit'}
+                                    onClick={() => handleClick(index)}
+                                    sx={{
+                                        whiteSpace: 'normal',
+                                        minWidth: '150px',
+                                        color: isActive ? undefined : '#1976d2',
+                                        borderColor: isActive ? undefined : '#1976d2',
+                                        '&:hover': {
+                                            borderColor: '#1565c0',
+                                            backgroundColor: isActive
+                                                ? undefined
+                                                : 'rgba(21, 101, 192, 0.04)',
+                                        },
+                                    }}
+                                >
+                                    {monument.name}
+                                </Button>
+                            );
+                        })}
+                    </Stack>
+                </Box>
+
+                <IconButton
+                    onClick={() => handleScroll('right')}
+                    sx={{ position: 'absolute', right: 0, zIndex: 1, backgroundColor: 'white' }}
+                >
+                    <ArrowForwardIosIcon />
+                </IconButton>
             </Box>
 
             {/* Карта */}
-            <Box width="100%" height="600px">
+            <Box width="100%">
                 <MapContainer
                     center={[43.2970, 68.2690]}
                     zoom={14}
                     scrollWheelZoom={false}
+                    dragging={!isSmallScreen}
+                    touchZoom={!isSmallScreen}
                     style={{ height: '100%', width: '100%' }}
                 >
                     <TileLayer

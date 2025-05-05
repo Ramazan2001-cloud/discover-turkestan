@@ -1,4 +1,5 @@
-import DrawerAppBar from './components/header/Header';
+import DrawerAppBar from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import Cards from './components/Cards/Cards';
 import Stepper from './components/Stepper/Stepper';
 import Map from './components/Map/Map';
@@ -72,6 +73,7 @@ function App() {
 						<Map />
 					</div>
 				</section>
+				<Footer />
 			</main >
 		</>
 	);
